@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
@@ -14,15 +14,30 @@ import { addToFavorites } from "../store/Favorites/actions";
 import { FavoritesContext } from "../store/Favorites/context";
 // Importam componenta Alert.
 import Alert from "react-bootstrap/Alert";
+// Importam hook-ul useLocalStorageState.
+import { useLocalStorage } from "../utils/hooks/useLocalStorage";
 
 function NewsDetails() {
-  const { favoritesDispatch } = useContext(FavoritesContext);
+  const { favoritesDispatch, favoritesState } = useContext(FavoritesContext);
   const { newsId } = useParams();
   const newsDetailsEndpoint = getNewsDetailsEndpoint(newsId);
   const newsDetails = useFetch(newsDetailsEndpoint);
   const adaptedNewsDetails = getNewsDetails(newsDetails);
   // Adaugam un state pentru afisarea alertei.
   const [isAlertDisplayed, setIsAlertDisplayed] = useState(false);
+  // Extragem functia de modificare a localStorage-ului. Nu avem nevoie de state-ul din localStorage, conventia este ca pentru variabile neutilizate sa punem denumirea _.
+  // Comentariul eslint-disable-next-line dezactiveaza eslint pentru urmatoarea linie (sa nu se planga ca nu utilizam variabila _).
+  // eslint-disable-next-line
+  const [_, setLocalStorageState] = useLocalStorage(
+    "favorites",
+    favoritesState
+  );
+  // Adaugarea in localStorage este un efect, atunci cand se modifica produsele favorite.
+  // Cum strim ca s-au modificat produsele favorite? Primim o noua valoare a lui favoritesState.
+  // setLocalStorageState este sugerat sa fie adaugat la dependente de o regula de lining.
+  useEffect(() => {
+    setLocalStorageState(favoritesState);
+  }, [favoritesState, setLocalStorageState]);
 
   const { title, description, image, date, author, content, thumbnail } =
     adaptedNewsDetails;

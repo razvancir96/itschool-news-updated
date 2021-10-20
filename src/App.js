@@ -7,11 +7,16 @@ import NewsDetails from "./pages/NewsDetails";
 import { useReducer } from "react";
 import { FavoritesContext } from "./store/Favorites/context";
 import { initialState, favoritesReducer } from "./store/Favorites/reducer";
+// Importam hook-ul useLocalStorage.
+import { useLocalStorage } from "./utils/hooks/useLocalStorage";
 
 function App() {
+  // Initializam state-ul, pornind de la localStorage.
+  // Daca am state in localStorage, il prieau, daca nu pornesc de la initialState.
+  const [initialLocalStorageState] = useLocalStorage("favorites", initialState);
   const [favoritesState, favoritesDispatch] = useReducer(
     favoritesReducer,
-    initialState
+    initialLocalStorageState
   );
   const favoritesContextValue = {
     favoritesState,
