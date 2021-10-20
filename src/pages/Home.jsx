@@ -10,11 +10,17 @@ import { Link } from "react-router-dom";
 function Home() {
   const technologyNewsEndpoint = getNewsCategoriesEndpoint("technology", 1, 6);
   const footballNewsEndpoint = getNewsCategoriesEndpoint("football", 1, 6);
+  // Generam endpoint-ul categoriei fashion.
+  const fashionNewsEndpoint = getNewsCategoriesEndpoint("fashion", 1, 6);
   let technologyData = useFetch(technologyNewsEndpoint);
   let footballData = useFetch(footballNewsEndpoint);
+  // Fetch-uim datele categoriei fashion.
+  let fashionData = useFetch(fashionNewsEndpoint);
 
   const adaptedTechnologyData = getNewsList(technologyData);
   const adaptedFootballData = getNewsList(footballData);
+  // Adaptam datele categoriei fashion.
+  const adaptedFashionData = getNewsList(fashionData);
 
   return (
     <Layout>
@@ -39,6 +45,20 @@ function Home() {
             Vezi toate știrile legate de tehnologie în secțiunea{" "}
             <Link to="/category/football" className="text-secondary">
               Fotbal
+            </Link>
+            .
+          </p>
+        </Container>
+      </section>
+      {/* Adaugam sectiunea ce afiseaza stirile despre fashion */}
+      <section className="fashion my-5">
+        <Container>
+          <h1 className="mb-5 pt-3">Fashion</h1>
+          <NewsCardList newsList={adaptedFashionData} />
+          <p>
+            Vezi toate știrile legate de fashion în secțiunea{" "}
+            <Link to="/category/fashion" className="text-secondary">
+              Fashion
             </Link>
             .
           </p>
