@@ -30,3 +30,18 @@
   width: 100%;
   aspect-ratio: 16 / 9;
 }
+
+/* Stilizam alerta. */
+#alert {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+@media (max-width: 576px) {
+  #alert {
+    width: calc(100vw - 20px);
+  }
+}

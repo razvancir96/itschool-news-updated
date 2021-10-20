@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
@@ -12,6 +12,8 @@ import styles from "./NewsDetails.module.css";
 import { getFormattedDate } from "../utils/date";
 import { addToFavorites } from "../store/Favorites/actions";
 import { FavoritesContext } from "../store/Favorites/context";
+// Importam componenta Alert.
+import Alert from "react-bootstrap/Alert";
 
 function NewsDetails() {
   const { favoritesDispatch } = useContext(FavoritesContext);
@@ -19,6 +21,8 @@ function NewsDetails() {
   const newsDetailsEndpoint = getNewsDetailsEndpoint(newsId);
   const newsDetails = useFetch(newsDetailsEndpoint);
   const adaptedNewsDetails = getNewsDetails(newsDetails);
+  // Adaugam un state pentru afisarea alertei.
+  const [isAlertDisplayed, setIsAlertDisplayed] = useState(false);
 
   const { title, description, image, date, author, content, thumbnail } =
     adaptedNewsDetails;
@@ -27,10 +31,22 @@ function NewsDetails() {
   function handleAddToFavorites(product) {
     const actionResult = addToFavorites(product);
     favoritesDispatch(actionResult);
+    // Afisam alerta.
+    setIsAlertDisplayed(true);
+    // Imediat ce afisam alerta, declansam un timer, care in 2 secunde va ascunde alerta.
+    setTimeout(() => {
+      setIsAlertDisplayed(false);
+    }, 2000);
   }
 
   return (
     <Layout>
+      {/* Afisam conditionat alerta */}
+      {isAlertDisplayed && (
+        <Alert variant="success" id={styles.alert}>
+          Succes! Poți vedea știrea accesând secțiunea Favorite.
+        </Alert>
+      )}
       <Container className={`${styles.newsDetails} my-5`}>
         <Row className="d-flex justify-content-center">
           <Col xs={12} lg={8}>
