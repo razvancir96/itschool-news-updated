@@ -19,7 +19,8 @@ import { useLocalStorage } from "../utils/hooks/useLocalStorage";
 
 function NewsDetails() {
   const { favoritesDispatch, favoritesState } = useContext(FavoritesContext);
-  const { newsId } = useParams();
+  let { newsId } = useParams();
+  newsId = decodeURIComponent(newsId);
   const newsDetailsEndpoint = getNewsDetailsEndpoint(newsId);
   const newsDetails = useFetch(newsDetailsEndpoint);
   const adaptedNewsDetails = getNewsDetails(newsDetails);

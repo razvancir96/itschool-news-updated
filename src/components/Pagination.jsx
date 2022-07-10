@@ -1,11 +1,11 @@
 import React from "react";
 import BootstrapPagination from "react-bootstrap/Pagination";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Pagination.module.css";
 
 function Pagination(props) {
   let { active, baseUrl } = props;
-  let history = useHistory();
+  let navigate = useNavigate();
   if (!active) {
     active = 1;
   }
@@ -18,7 +18,7 @@ function Pagination(props) {
         active={number === Number(active)}
         id={active ? styles.paginationActive : null}
         onClick={() => {
-          history.push(`${baseUrl}?page=${number}`);
+          navigate(`${baseUrl}?page=${number}`);
           window.scrollTo({
             top: 0,
             behavior: "smooth",
