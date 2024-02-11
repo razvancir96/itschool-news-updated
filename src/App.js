@@ -1,4 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+// Importam componentele ce tin de rutare.;
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// Importam paginile.
 import Page404 from "./pages/Page404";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
@@ -9,6 +11,27 @@ import { FavoritesContext } from "./store/Favorites/context";
 import { initialState, favoritesReducer } from "./store/Favorites/reducer";
 // Importam hook-ul useLocalStorage.
 import { useLocalStorage } from "./utils/hooks/useLocalStorage";
+
+// Definim rutele, similar cu ce am facut la sedinta 32.
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    errorElement: <Page404 />,
+  },
+  {
+    path: "/favorites",
+    element: <Favorites />,
+  },
+  {
+    path: "/category/:categoryId",
+    element: <NewsCategory />,
+  },
+  {
+    path: "/news/:newsId",
+    element: <NewsDetails />,
+  },
+]);
 
 function App() {
   // Initializam state-ul, pornind de la localStorage.
@@ -26,13 +49,8 @@ function App() {
   return (
     <div className="App">
       <FavoritesContext.Provider value={favoritesContextValue}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/category/:categoryId" element={<NewsCategory />} />
-          <Route path="/news/:newsId" element={<NewsDetails />} />
-          <Route path="*" element={<Page404 />} />
-        </Routes>
+        {/* Adaugam providerul de rutare, similara cu ce am facut la sedinta 32. */}
+        <RouterProvider router={router} />
       </FavoritesContext.Provider>
     </div>
   );
