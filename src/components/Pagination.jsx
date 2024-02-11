@@ -1,7 +1,7 @@
 import React from "react";
 import BootstrapPagination from "react-bootstrap/Pagination";
 import { useNavigate } from "react-router-dom";
-import styles from "./Pagination.module.css";
+import "./Pagination.css";
 
 function Pagination(props) {
   let { active, baseUrl } = props;
@@ -16,7 +16,7 @@ function Pagination(props) {
       <BootstrapPagination.Item
         key={number}
         active={number === Number(active)}
-        id={active ? styles.paginationActive : null}
+        id={active ? "pagination-active" : null}
         onClick={() => {
           navigate(`${baseUrl}?page=${number}`);
           window.scrollTo({
@@ -32,9 +32,7 @@ function Pagination(props) {
 
   return (
     <div className="d-flex justify-content-center">
-      <BootstrapPagination className={styles.pagination}>
-        {items}
-      </BootstrapPagination>
+      <BootstrapPagination className="Pagination">{items}</BootstrapPagination>
     </div>
   );
 }

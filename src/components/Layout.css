@@ -1,10 +1,10 @@
-.layout {
+.Layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.layout main {
+.Layout main {
   flex: 1;
   text-align: center;
 }
