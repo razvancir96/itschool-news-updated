@@ -1,4 +1,4 @@
-const API_KEY = "cce4027e-faf6-4eb5-ba9b-491c9b8f3571";
+const API_KEY = "fcb9a5de-baca-4714-b762-d5ac53a89b3d";
 
 export function getNewsCategoriesEndpoint(
   category,
